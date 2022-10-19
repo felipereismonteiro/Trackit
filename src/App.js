@@ -1,14 +1,14 @@
 import Header from "./components/header";
-import Logo from "./components/logo";
 import GlobalStyle from "./components/assets/global.js"
 import Footer from "./components/footer";
+import MainPage from "./mainPage/mainPage";
+import SigninPage from "./signinPage/signinPage";
 
 function App() {
   return (
     <>
-      <GlobalStyle />
-      <Header />
-      <Footer />
+      <SigninPage />
+      <GlobalStyle/>
     </>
   )
 }
