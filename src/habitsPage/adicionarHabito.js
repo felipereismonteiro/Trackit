@@ -1,18 +1,24 @@
 import styled from "styled-components"
 
 export default function AddHabito() {
-    return(
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        console.log(e.target.nome.value)
+    }
+
+    return (
         <Container>
-            <Form onSubmit="">
-                    <Nome type="text" placeholder="nome do hábito"/>
+            <Form onSubmit={handleSubmit}>
+                <Nome type="text" name="nome" placeholder="nome do hábito" />
                 <Checkboxes>
-                    <button type="button">D</button>
-                    <button type="button">S</button>
-                    <button type="button">T</button>
-                    <button type="button">Q</button>
-                    <button type="button">Q</button>
-                    <button type="button">S</button>
-                    <button type="button">S</button>
+                    <button type="button" name="domingo" >D</button>
+                    <button type="button" name="segunda" >S</button>
+                    <button type="button" name="terca" >T</button>
+                    <button type="button" name="quarta" >Q</button>
+                    <button type="button" name="quinta" >Q</button>
+                    <button type="button" name="sexta" >S</button>
+                    <button type="button" name="sabado" >S</button>
                 </Checkboxes>
                 <Enviar>
                     <input type="button" value="Cancelar" className="cancelar" />

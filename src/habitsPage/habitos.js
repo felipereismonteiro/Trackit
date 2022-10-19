@@ -1,9 +1,15 @@
 import styled from "styled-components"
 
 export default function Habitos() {
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        console.log(e);
+    }
+
     return(
         <Container>
-            <Form onSubmit="">
+            <Form onSubmit={handleSubmit}>
                 <ion-icon name="trash-outline"></ion-icon>
                 <Nome>Ler 1 capítulo de livro</Nome>
                 <Checkboxes>
