@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
 
 body {
 	background-color: #E5E5E5;
+	font-family: 'Lexend Deca', sans-serif;
 }
 
 html, body, div, span, applet, object, iframe,

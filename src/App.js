@@ -1,17 +1,17 @@
 import Header from "./components/header";
-import GlobalStyle from "./components/assets/global.js"
+import GlobalStyle from "./components/assets/global.js";
 import Footer from "./components/footer";
 import MainPage from "./mainPage/mainPage";
 import SigninPage from "./signinPage/signinPage";
-import styled from "styled-components";
+import HabitsPage from "./habitsPage/habitsPage";
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <MainPage />
+      <HabitsPage />
     </>
-  )
-}
+  );
+};
 
 export default App;
