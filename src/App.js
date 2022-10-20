@@ -5,12 +5,13 @@ import MainPage from "./mainPage/mainPage";
 import SigninPage from "./signinPage/signinPage";
 import HabitsPage from "./habitsPage/habitsPage";
 import TodayPage from "./todayPage/todayPage";
+import HistoryPage from "./historyPage/HistoryPage";
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <TodayPage />
+      <HistoryPage />
     </>
   );
 };
