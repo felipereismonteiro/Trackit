@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import elipse from "./assets/Ellipse.png"
 import vector from "./assets/Vector.png"
@@ -6,13 +7,19 @@ export default function Footer() {
     return(
         <>
             <Container>
-                <p>Hábitos</p>
+                <Link to="/habitos" style={{textDecoration: "none"}}>
+                    <p>Hábitos</p>
+                </Link>
+                    <Link to="/hoje" style={{textDecoration: "none"}}>
                     <ImgDiv>
                         <img src={elipse} alt="" />
-                        <p>Hoje</p>
+                        <p style={{color: "white"}}>Hoje</p>
                         <Img src={vector} alt="" />
                     </ImgDiv>
-                <p>Histórico</p>
+                    </Link>
+                <Link to="/historico" style={{textDecoration: "none", color: "52B6FF"}}>
+                    <p>Histórico</p>
+                </Link>
             </Container>
         </>
     );
@@ -30,6 +37,9 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-around;
+    && p {
+        color: #52B6FF;
+    }
 `
 
 const Img = styled.img`

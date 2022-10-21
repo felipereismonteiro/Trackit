@@ -1,14 +1,19 @@
-import axios from "axios";
-import { useState } from "react";
+import { LogadoContext } from "../components/logadoContext";
+import { useContext, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
+
 import styled from "styled-components"
 import logo from "../components/assets/Group.png"
+import axios from "axios";
+
+
 
 export default function MainPage() {
     const navigate = useNavigate()
     const [disable, setDisable] = useState(false)
     const [emailSenha, setEmailSenha] = useState({email: "", senha: ""})
+    const {setLogado} = useContext(LogadoContext)
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -17,8 +22,9 @@ export default function MainPage() {
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", {
             email: e.target.email.value,
             password: e.target.password.value
-        }).then(() => {   
+        }).then((res) => {   
             navigate("/hoje")
+            setLogado(res.data)
         }).catch((e) => {
             alert(e.response.data.message);
             setDisable(false)

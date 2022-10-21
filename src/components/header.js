@@ -1,11 +1,14 @@
+import { useContext } from "react";
 import styled from "styled-components"
-import logo from "./assets/TrackIt.png"
+import { LogadoContext } from "./logadoContext.js";
 
 export default function Header() {
+    const {logado} = useContext(LogadoContext)
+
     return(       
         <Container>
             <Logo>TrackIt</Logo>
-            <Img src="https://i.pinimg.com/originals/33/c7/1e/33c71e3cc14c20d85593d9e297f797da.jpg" alt="profilePicture" />
+            <Img src={logado !== undefined ? logado.image : ""} alt="profilePicture" />
         </Container>    
     ) 
 }
@@ -32,5 +35,7 @@ const Logo = styled.p`
 
 const Img = styled.img`
     border-radius: 50%;
-    width: 50px;
+    width: 51px;
+    height: 51px;
+    background-position: cover;
 `
