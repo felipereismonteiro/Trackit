@@ -1,6 +1,5 @@
 import styled from "styled-components"
 import logo from "./assets/TrackIt.png"
-import loading from "./assets/loading.gif"
 
 export default function Header() {
     return(       

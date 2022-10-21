@@ -1,22 +1,68 @@
+import axios from "axios";
+import { useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import logo from "../components/assets/Group.png"
 
 export default function MainPage() {
+    const navigate = useNavigate()
+    const [disable, setDisable] = useState(false)
+    const [emailSenha, setEmailSenha] = useState({email: "", senha: ""})
+
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(e.target.email.value);
-        console.log(e.target.password.value);
+        setDisable(true);
+
+        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", {
+            email: e.target.email.value,
+            password: e.target.password.value
+        }).then(() => {   
+            navigate("/hoje")
+        }).catch((e) => {
+            alert(e.response.data.message);
+            setDisable(false)
+            setEmailSenha({email: "", senha: ""})
+        });
+
     }
 
-    return(
+    function loading() {
+        if(disable === false) {
+            return <button type="submit" >Entrar</button>
+        } else {
+            return <button type="submit" ><ThreeDots
+                        height="80" 
+                        width="80" 
+                        radius="9"
+                        color="white" 
+                        ariaLabel="three-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClassName=""
+                        visible={true}
+                    /></button>
+        }
+    }
+
+    function handleEmail(e) {
+        setEmailSenha({...emailSenha, email: e.target.value})
+    }
+
+    function handlePassword(e) {
+        setEmailSenha({...emailSenha, senha: e.target.value})
+    }
+
+    return (
         <Container>
             <img src={logo} alt="logo" />
             <Form onSubmit={handleSubmit}>
-                <input name="email" type="email" placeholder="email" required />
-                <input name="password" type="password" placeholder="senha" required/>
-                <button type="submit">Entrar</button>
+                <input name="email" value={emailSenha.email} type="email" placeholder="email" required onChange={handleEmail} disabled={disable} />
+                <input name="password" value={emailSenha.senha} type="password" placeholder="senha" required onChange={handlePassword} disabled={disable} />
+                {loading()}
             </Form>
-            <p>Não tem uma conta? Cadastre-se!</p>
+                <Link to="/cadastro">
+                    <p>Não tem uma conta? Cadastre-se!</p>
+                </Link>
         </Container>
     )
 }
@@ -42,6 +88,7 @@ const Form = styled.form`
     display: flex;
     flex-direction: column;
     width: 80%;
+    position: relative;
     && input{
         border: 1px solid #D5D5D5;
         border-radius: 3px;
@@ -60,5 +107,8 @@ const Form = styled.form`
         color: white;
         font-family: 'Lexend Deca';
         border-radius: 3px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 `
