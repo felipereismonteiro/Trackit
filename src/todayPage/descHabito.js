@@ -1,9 +1,29 @@
 import styled from "styled-components"
+import dayjs from "dayjs"
 
 export default function Desc() {
+    function dia() {
+        switch(dayjs().format('dddd')) {
+            case "Sunday":
+                return "Domingo"
+            case "Monday":
+                return "Segunda"
+            case "Tuesday":
+                return "Terça"
+            case "Wednesday":
+                return "Quarta"
+            case "Thursday":
+                return "Quinta"
+            case "Friday":
+                return "Sexta"
+            case "Saturday":
+                return "Sábado"
+        }
+    }
+
     return(
         <DescHabito>
-            <h1>Segunda, 17/05</h1>
+            <h1>{`${dia()} ${dayjs().format('DD/MM')}`}</h1>
             <p>Nenhum hábito concluído ainda</p>
         </DescHabito>
     )

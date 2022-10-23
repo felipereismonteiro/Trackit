@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { buildStyles, CircularProgressbar, CircularProgressbarWithChildren } from "react-circular-progressbar";
+import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
