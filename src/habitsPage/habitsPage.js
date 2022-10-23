@@ -13,6 +13,10 @@ export default function HabitsPage() {
     const [habitos, setHabitos] = useState([])
     const [adicionarHabito, setAdicionarHabito] = useState(false)
     const [buscarHabitos, setBuscarHabitos] = useState(false)
+    const [criarHabito, setCriarHabito] = useState({
+        name: "",
+        days: [] 
+    })
 
     useEffect(() => {
         axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",{
@@ -42,7 +46,10 @@ export default function HabitsPage() {
                 {adicionarHabito === true && <AddHabito buscarHabitos={buscarHabitos} 
                                                         setBuscarHabitos={setBuscarHabitos}
                                                         adicionarHabito={adicionarHabito}
-                                                        setAdicionarHabito={setAdicionarHabito} />}
+                                                        setAdicionarHabito={setAdicionarHabito} 
+                                                        criarHabito={criarHabito}
+                                                        setCriarHabito={setCriarHabito}
+                                                        />}
 
                 {habitos.length === 0 ? <NenhumHabito /> : habitos.map((h) => <Habitos  key={h.id} 
                                                                                         buscarHabitos={buscarHabitos} 

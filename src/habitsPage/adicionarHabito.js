@@ -4,15 +4,12 @@ import styled from "styled-components"
 import { Contexto } from "../components/logadoContext"
 import { ThreeDots } from "react-loader-spinner";
 
-export default function AddHabito({buscarHabitos, setBuscarHabitos, adicionarHabito, setAdicionarHabito}) {
+export default function AddHabito({buscarHabitos, setBuscarHabitos, adicionarHabito, setAdicionarHabito, criarHabito, setCriarHabito}) {
     const diasSemana = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"]
     
     const [loading, setLoading] = useState(false)
     const {logado} = useContext(Contexto)
-    const [criarHabito, setCriarHabito] = useState({
-        name: "",
-        days: [] 
-    })
+    
 
     function handleSubmit(e) {
         e.preventDefault() 
@@ -25,6 +22,8 @@ export default function AddHabito({buscarHabitos, setBuscarHabitos, adicionarHab
 
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", criarHabito, config).then((res) => {
             setBuscarHabitos(!buscarHabitos)
+            setCriarHabito({name: "", days: []})
+            setAdicionarHabito(!adicionarHabito)
             setLoading(false)
         }).catch((err) => {
             console.log(err.response.data);
@@ -50,7 +49,7 @@ export default function AddHabito({buscarHabitos, setBuscarHabitos, adicionarHab
     return (
         <Container>
             <Form onSubmit={handleSubmit}>
-                <Nome onChange={adicionarNome} type="text" name="nome" placeholder="nome do hábito" disabled={loading} />
+                <Nome value={criarHabito.name} onChange={adicionarNome} type="text" name="nome" placeholder="nome do hábito" disabled={loading} />
                 <Checkboxes>
                     {diasSemana.map((d, index) => 
                     <button disabled={loading} className={criarHabito.days.includes(index) ? "marcado" : "desmarcado"} key={index} onClick={() => adicionarDia(index)} type="button" name={d}>{d.split("")[0].toUpperCase()}</button>
