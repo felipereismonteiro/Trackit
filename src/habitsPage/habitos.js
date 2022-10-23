@@ -1,27 +1,42 @@
+import axios from "axios";
+import { useContext } from "react";
 import styled from "styled-components"
+import { Contexto } from "../components/logadoContext";
 
-export default function Habitos() {
+export default function Habitos({ buscarHabitos, setBuscarHabitos, idHabito, nome, dias }) {
+    const diasSemana = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"]
+
+    const {logado} = useContext(Contexto)
 
     function handleSubmit(e) {
         e.preventDefault()
         console.log(e);
     }
 
+    function excluirHabito() {
+        if(window.confirm("Você esta prestes a excluir um hábito")){
+            axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${idHabito}`, {
+                headers: {
+                    "Authorization" : `Bearer ${logado.token}`
+                }
+            }).then((res) => {
+                setBuscarHabitos(!buscarHabitos)
+            }).catch((err) => {
+                console.log(err.response.data)
+            }) 
+        } else {
+            alert("Cancelado")
+        }
+    }
+
     return(
         <Container>
             <Form onSubmit={handleSubmit}>
-                <ion-icon name="trash-outline"></ion-icon>
-                <Nome>Ler 1 capítulo de livro</Nome>
+                <ion-icon onClick={excluirHabito} name="trash-outline"></ion-icon>
+                <Nome>{nome}</Nome>
                 <Checkboxes>
-                    <button type="button">D</button>
-                    <button type="button">S</button>
-                    <button type="button">T</button>
-                    <button type="button">Q</button>
-                    <button type="button">Q</button>
-                    <button type="button">S</button>
-                    <button type="button">S</button>
+                    {diasSemana.map((d, index) => <button className={dias.includes(index) ? "marcado" : "desmarcado"} key={index} type="button" name={d}>{d.split("")[0].toUpperCase()}</button>)}
                 </Checkboxes>
-                
             </Form>
         </Container>
     )
@@ -56,19 +71,21 @@ const Form = styled.form`
 `
 
 const Checkboxes = styled.div`  
-    margin: 10px 0;
+    margin: 10px 0px -2px 0px;
     && button {
         width: 30px;
         height: 30px;
         border: 1px solid #D5D5D5;
-        background: #FFFFFF;
-        color: #DBDBDB;
         font-size: 20px;
         margin-right: 5px;
         border-radius: 5px;
     }
-    && button:active {
+    && .marcado {
         color: #FFFFFF;
         background: #CFCFCF;
+    }
+    && .desmarcado {
+        background: #FFFFFF;
+        color: #DBDBDB;
     }
 `

@@ -1,3 +1,3 @@
 import { createContext } from "react";
 
-export const LogadoContext = createContext()
+export const Contexto = createContext()

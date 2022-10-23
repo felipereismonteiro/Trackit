@@ -1,4 +1,3 @@
-import { LogadoContext } from "../components/logadoContext";
 import { useContext, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import logo from "../components/assets/Group.png"
 import axios from "axios";
+import { Contexto } from "../components/logadoContext";
 
 
 
@@ -13,7 +13,7 @@ export default function MainPage() {
     const navigate = useNavigate()
     const [disable, setDisable] = useState(false)
     const [emailSenha, setEmailSenha] = useState({email: "", senha: ""})
-    const {setLogado} = useContext(LogadoContext)
+    const { setLogado } = useContext(Contexto)
 
     function handleSubmit(e) {
         e.preventDefault();

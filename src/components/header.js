@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import styled from "styled-components"
-import { LogadoContext } from "./logadoContext.js";
+import { Contexto } from "./logadoContext.js";
 
 export default function Header() {
-    const {logado} = useContext(LogadoContext)
+    const {logado} = useContext(Contexto)
 
     return(       
         <Container>
@@ -14,6 +14,7 @@ export default function Header() {
 }
 
 const Container = styled.div`
+    z-index: 1;
     width: 100%;
     height: 70px;
     background-color: #126BA5;

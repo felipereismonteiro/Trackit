@@ -2,7 +2,7 @@ import GlobalStyle from "./components/assets/global.js";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import { LogadoContext } from "./components/logadoContext.js";
+import { Contexto } from "./components/logadoContext.js";
 
 import MainPage from "./mainPage/mainPage";
 import SigninPage from "./signinPage/signinPage";
@@ -13,13 +13,12 @@ import HistoryPage from "./historyPage/HistoryPage";
 
 function App() {
   const [logado, setLogado] = useState()
-
-  console.log(logado)
+  const [porcentagem, setPorcentagem] = useState(60)
 
   return (
         <BrowserRouter>     
         <GlobalStyle />      
-          <LogadoContext.Provider value={{logado, setLogado}}>
+          <Contexto.Provider value={{logado, setLogado, porcentagem, setPorcentagem}}>
             <Routes>        
                 <Route path="/" element={<MainPage />} />
                 <Route path="/cadastro" element={<SigninPage />} />
@@ -27,7 +26,7 @@ function App() {
                 <Route path="/hoje" element={<TodayPage />} />
                 <Route path="/historico" element={<HistoryPage />} />            
             </Routes>   
-          </LogadoContext.Provider>
+          </Contexto.Provider>
         </BrowserRouter>
   );
 };

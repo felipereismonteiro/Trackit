@@ -1,28 +1,74 @@
+import axios from "axios"
+import { useContext, useState } from "react"
 import styled from "styled-components"
+import { Contexto } from "../components/logadoContext"
+import { ThreeDots } from "react-loader-spinner";
 
-export default function AddHabito() {
+export default function AddHabito({buscarHabitos, setBuscarHabitos, adicionarHabito, setAdicionarHabito}) {
+    const diasSemana = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"]
+    
+    const [loading, setLoading] = useState(false)
+    const {logado} = useContext(Contexto)
+    const [criarHabito, setCriarHabito] = useState({
+        name: "",
+        days: [] 
+    })
 
     function handleSubmit(e) {
-        e.preventDefault()
-        console.log(e.target.nome.value)
+        e.preventDefault() 
+
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${logado.token}`
+            }
+        }
+
+        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", criarHabito, config).then((res) => {
+            setBuscarHabitos(!buscarHabitos)
+            setLoading(false)
+        }).catch((err) => {
+            console.log(err.response.data);
+            alert("Insira os dados corretamente!!!")
+            setLoading(false)
+        })
+        
+        
+    }
+
+    function adicionarNome(e) {
+        setCriarHabito({...criarHabito, name: e.target.value})
+    }   
+
+    function adicionarDia(dia) {
+        if(criarHabito.days.includes(dia)) {
+            setCriarHabito({...criarHabito, days: criarHabito.days.filter((d) => d !== dia)})
+        } else {
+            setCriarHabito({...criarHabito, days: [...criarHabito.days, dia]})
+        }
     }
 
     return (
         <Container>
             <Form onSubmit={handleSubmit}>
-                <Nome type="text" name="nome" placeholder="nome do hábito" />
+                <Nome onChange={adicionarNome} type="text" name="nome" placeholder="nome do hábito" disabled={loading} />
                 <Checkboxes>
-                    <button type="button" name="domingo" >D</button>
-                    <button type="button" name="segunda" >S</button>
-                    <button type="button" name="terca" >T</button>
-                    <button type="button" name="quarta" >Q</button>
-                    <button type="button" name="quinta" >Q</button>
-                    <button type="button" name="sexta" >S</button>
-                    <button type="button" name="sabado" >S</button>
+                    {diasSemana.map((d, index) => 
+                    <button disabled={loading} className={criarHabito.days.includes(index) ? "marcado" : "desmarcado"} key={index} onClick={() => adicionarDia(index)} type="button" name={d}>{d.split("")[0].toUpperCase()}</button>
+                    )}
                 </Checkboxes>
                 <Enviar>
-                    <input type="button" value="Cancelar" className="cancelar" />
-                    <input type="submit" className="enviar" value="Salvar" />
+                    <input disabled={loading} onClick={() => setAdicionarHabito(!adicionarHabito)} type="button" value="Cancelar" className="cancelar" />
+                    <button type="submit" onClick={() => setLoading(true)} className="enviar" value="Salvar">{loading ? <ThreeDots
+                        height="40" 
+                        width="40" 
+                        radius="9"
+                        color="white" 
+                        ariaLabel="three-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClassName=""
+                        visible={true}
+                        transition="1s"
+                    /> : "Salvar"}</button>
                 </Enviar>
             </Form>
         </Container>
@@ -34,6 +80,7 @@ const Container = styled.div`
     border-radius: 5px;
     background-color: #ffffff;
     padding: 30px;
+
 `
 
 const Nome = styled.input`
@@ -75,6 +122,12 @@ const Enviar = styled.div`
         height: 35px;
         border-radius: 5px;
     }
+    && button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 1s;
+    }
 `
 
 const Checkboxes = styled.div`  
@@ -83,14 +136,16 @@ const Checkboxes = styled.div`
         width: 30px;
         height: 30px;
         border: 1px solid #D5D5D5;
-        background: #FFFFFF;
-        color: #DBDBDB;
         font-size: 20px;
         margin-right: 5px;
         border-radius: 5px;
     }
-    && button:active {
+    && .marcado {
         color: #FFFFFF;
         background: #CFCFCF;
+    }
+    && .desmarcado {
+        background: #FFFFFF;
+        color: #DBDBDB;
     }
 `

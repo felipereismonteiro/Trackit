@@ -1,9 +1,13 @@
+import { useContext } from "react";
+import { buildStyles, CircularProgressbar, CircularProgressbarWithChildren } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import elipse from "./assets/Ellipse.png"
-import vector from "./assets/Vector.png"
-
+import { Contexto } from "./logadoContext";
 export default function Footer() {
+    
+    const { porcentagem, setPorcentagem } = useContext(Contexto)
+
     return(
         <>
             <Container>
@@ -12,15 +16,25 @@ export default function Footer() {
                 </Link>
                     <Link to="/hoje" style={{textDecoration: "none"}}>
                     <ImgDiv>
-                        <img src={elipse} alt="" />
-                        <p style={{color: "white"}}>Hoje</p>
-                        <Img src={vector} alt="" />
+                        <CircularProgressbar 
+                        value={porcentagem} 
+                        text="Hoje"
+                        styles={buildStyles({
+                            textSize: "25",
+                            backgroundColor: "#3e98c7",
+                            textColor: "#fff",
+                            pathColor: "#fff",
+                            trailColor: "transparent"
+                            
+                        })}
+                        /> 
                     </ImgDiv>
                     </Link>
                 <Link to="/historico" style={{textDecoration: "none", color: "52B6FF"}}>
                     <p>Histórico</p>
                 </Link>
             </Container>
+            <Box></Box>
         </>
     );
 };
@@ -42,18 +56,22 @@ const Container = styled.div`
     }
 `
 
-const Img = styled.img`
-    position: absolute;
-    margin-left: 10px;
+const Box = styled.div`
+    width: 100%;
+    height: 70px;
+    background-color: #FFFFFF;
+    opacity: 0;
 `
 
 const ImgDiv = styled.div`
     color: #FFFFFF;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    && p {
-        position: absolute;
-    }
+    width: 91px;
+    height: 91px;
+    background-color: #52B6FF;
+    border-radius: 50%;
+    padding: 7px;
 `

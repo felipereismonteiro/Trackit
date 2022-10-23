@@ -1,24 +1,56 @@
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/footer";
 import Header from "../components/header";
+import { Contexto } from "../components/logadoContext";
 import AddHabito from "./adicionarHabito";
 import Habitos from "./habitos";
 import NenhumHabito from "./nenhumHabito";
 
 export default function HabitsPage() {
+    const {logado} = useContext(Contexto)
+    const [habitos, setHabitos] = useState([])
+    const [adicionarHabito, setAdicionarHabito] = useState(false)
+    const [buscarHabitos, setBuscarHabitos] = useState(false)
+
+    useEffect(() => {
+        axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",{
+            headers: {
+                "Authorization": `Bearer ${logado.token}`
+            }
+        }).then((res) => {
+            setHabitos(res.data)
+        }).catch((err) => {
+            console.log(err.response.data)
+        })
+    }, [buscarHabitos])
+
+    useEffect(() => {
+
+    }, [])
+
     return(
         <>
             <Header />
+
                 <Add>
                     <p>Meus hábitos</p>
-                    <button><ion-icon name="add-outline"></ion-icon></button>
+                    <button onClick={() => setAdicionarHabito(!adicionarHabito)}><ion-icon name="add-outline"></ion-icon></button>
                 </Add>
 
-                <AddHabito />
+                {adicionarHabito === true && <AddHabito buscarHabitos={buscarHabitos} 
+                                                        setBuscarHabitos={setBuscarHabitos}
+                                                        adicionarHabito={adicionarHabito}
+                                                        setAdicionarHabito={setAdicionarHabito} />}
 
-                <Habitos />
+                {habitos.length === 0 ? <NenhumHabito /> : habitos.map((h) => <Habitos  key={h.id} 
+                                                                                        buscarHabitos={buscarHabitos} 
+                                                                                        setBuscarHabitos={setBuscarHabitos} 
+                                                                                        idHabito={h.id}
+                                                                                        nome={h.name}
+                                                                                        dias={h.days} />)} 
 
-                <NenhumHabito />
             <Footer />
         </>
     );
