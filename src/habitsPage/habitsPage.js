@@ -25,6 +25,7 @@ export default function HabitsPage() {
             }
         }).then((res) => {
             setHabitos(res.data)
+            
         }).catch((err) => {
             console.log(err.response.data)
         })

@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useContext, useEffect, useState } from "react"
-import { MutatingDots } from "react-loader-spinner"
+import { MutatingDots, ThreeDots } from "react-loader-spinner"
 import styled from "styled-components"
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -25,11 +25,14 @@ export default function TodayPage() {
         })
     }, [carregar])
 
-    if (habito.length === 0) {
-        return (<>
-        <Header />
-            <Container>
-            <MutatingDots 
+    return (
+        <>
+            <Header />
+
+                <Desc percentual={habito.length === 0 ? 0 : ((habitosConcluidos.length / habito.length) * 100).toFixed()}/>
+
+                {habito.length === 0 ? <Container>
+            <ThreeDots 
                 height="100"
                 width="100"
                 color="#126BA5"
@@ -40,19 +43,7 @@ export default function TodayPage() {
                 wrapperClass=""
                 visible={true}
                 />
-            </Container>
-        <Footer percentual={((habitosConcluidos.length / habito.length) * 100).toFixed()}/>
-            </>
-            )
-    }
-
-    return (
-        <>
-            <Header />
-
-                <Desc percentual={((habitosConcluidos.length / habito.length) * 100).toFixed()}/>
-
-                {habito.map((h) => <Habito  key={h.id}
+            </Container> : habito.map((h) => <Habito  key={h.id}
                                             id={h.id}
                                             name={h.name} 
                                             currentSequence={h.currentSequence} 
@@ -73,7 +64,7 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     position: absolute;
-    top: 50%;
+    top: 42%;
 `
 
 

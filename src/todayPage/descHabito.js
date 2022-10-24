@@ -2,7 +2,7 @@ import styled from "styled-components"
 import dayjs from "dayjs"
 
 export default function Desc({percentual}) {
-
+    
     function dia() {
         switch(dayjs().format('dddd')) {
             case "Sunday":
