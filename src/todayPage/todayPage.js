@@ -1,5 +1,7 @@
 import axios from "axios"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
+import { MutatingDots } from "react-loader-spinner"
+import styled from "styled-components"
 import Footer from "../components/footer"
 import Header from "../components/header"
 import { Contexto } from "../components/logadoContext"
@@ -7,32 +9,71 @@ import Desc from "./descHabito"
 import Habito from "./habito"
 
 export default function TodayPage() {
-    const {logado} = useContext(Contexto)
+    const {logado, habito, setHabito, habitosConcluidos, setHabitosConcluidos} = useContext(Contexto)
+    const [carregar, setCarregar] = useState(false)
 
-    if(logado !== undefined) {
+    useEffect(() => {
         axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", {
             headers: {
                 "Authorization": `Bearer ${logado.token}`
             }
         }).then((res) => {
-            console.log(res.data)
+            setHabito(res.data)
+            setHabitosConcluidos(res.data.filter((i) => i.done !== false))
         }).catch((err) => {
             console.log(err.response.data)
         })
+    }, [carregar])
+
+    if (habito.length === 0) {
+        return (<>
+        <Header />
+            <Container>
+            <MutatingDots 
+                height="100"
+                width="100"
+                color="#126BA5"
+                secondaryColor= '#126BA5'
+                radius='12.5'
+                ariaLabel="mutating-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                />
+            </Container>
+        <Footer percentual={((habitosConcluidos.length / habito.length) * 100).toFixed()}/>
+            </>
+            )
     }
 
     return (
         <>
             <Header />
 
-                <Desc />
+                <Desc percentual={((habitosConcluidos.length / habito.length) * 100).toFixed()}/>
 
-                <Habito />
-                <Habito />
+                {habito.map((h) => <Habito  key={h.id}
+                                            id={h.id}
+                                            name={h.name} 
+                                            currentSequence={h.currentSequence} 
+                                            done={h.done}
+                                            highestSequence={h.highestSequence}
+                                            carregar={carregar}
+                                            setCarregar={setCarregar}
+                                            />)}
 
-            <Footer />
+            <Footer percentual={((habitosConcluidos.length / habito.length) * 100).toFixed()}/>
         </>
     )
 }
+
+const Container = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+`
 
 

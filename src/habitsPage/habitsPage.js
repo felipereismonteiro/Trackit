@@ -9,7 +9,7 @@ import Habitos from "./habitos";
 import NenhumHabito from "./nenhumHabito";
 
 export default function HabitsPage() {
-    const {logado} = useContext(Contexto)
+    const {logado, habito, habitosConcluidos} = useContext(Contexto)
     const [habitos, setHabitos] = useState([])
     const [adicionarHabito, setAdicionarHabito] = useState(false)
     const [buscarHabitos, setBuscarHabitos] = useState(false)
@@ -58,7 +58,7 @@ export default function HabitsPage() {
                                                                                         nome={h.name}
                                                                                         dias={h.days} />)} 
 
-            <Footer />
+            <Footer percentual={((habitosConcluidos.length / habito.length) * 100).toFixed()}/>
         </>
     );
 };

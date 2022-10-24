@@ -1,7 +1,8 @@
 import styled from "styled-components"
 import dayjs from "dayjs"
 
-export default function Desc() {
+export default function Desc({percentual}) {
+
     function dia() {
         switch(dayjs().format('dddd')) {
             case "Sunday":
@@ -21,10 +22,18 @@ export default function Desc() {
         }
     }
 
+    function verifica() {
+        if(percentual < 1) {
+            return <p>Nenhum hábito concluído ainda</p>
+        } else {
+            return <p className="verde">{percentual}% dos hábitos concluídos</p>
+        }
+    }
+
     return(
         <DescHabito>
             <h1>{`${dia()} ${dayjs().format('DD/MM')}`}</h1>
-            <p>Nenhum hábito concluído ainda</p>
+            {verifica()}
         </DescHabito>
     )
 }
@@ -49,5 +58,8 @@ const DescHabito = styled.div`
         line-height: 22px;
 
         color: #BABABA;
+    }
+    && .verde {
+        color: #8FC549;
     }
 `

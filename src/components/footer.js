@@ -1,12 +1,10 @@
-import { useContext } from "react";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Contexto } from "./logadoContext";
-export default function Footer() {
+
+export default function Footer({percentual}) {
     
-    const { porcentagem, setPorcentagem } = useContext(Contexto)
 
     return(
         <>
@@ -17,15 +15,14 @@ export default function Footer() {
                     <Link to="/hoje" style={{textDecoration: "none"}}>
                     <ImgDiv>
                         <CircularProgressbar 
-                        value={porcentagem} 
+                        value={Number(percentual)} 
                         text="Hoje"
                         styles={buildStyles({
                             textSize: "25",
                             backgroundColor: "#3e98c7",
                             textColor: "#fff",
-                            pathColor: "#fff",
+                            pathColor: Number(percentual) < 100 ? "#fff" : "#8FC549",
                             trailColor: "transparent"
-                            
                         })}
                         /> 
                     </ImgDiv>
@@ -38,6 +35,8 @@ export default function Footer() {
         </>
     );
 };
+
+//#8FC549
 
 const Container = styled.div`
     width: 100%;
@@ -61,6 +60,7 @@ const Box = styled.div`
     height: 70px;
     background-color: #FFFFFF;
     opacity: 0;
+    margin-top: 20px;
 `
 
 const ImgDiv = styled.div`

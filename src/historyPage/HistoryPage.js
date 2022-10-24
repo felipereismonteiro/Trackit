@@ -1,8 +1,12 @@
+import { useContext } from "react"
 import styled from "styled-components"
 import Footer from "../components/footer"
 import Header from "../components/header"
+import { Contexto } from "../components/logadoContext"
 
 export default function HistoryPage() {
+    const {habitosConcluidos, habito} = useContext(Contexto)
+
     return(
         <>
             <Header />
@@ -11,7 +15,7 @@ export default function HistoryPage() {
                     <h1>Histórico</h1>
                     <p>Em breve você poderá ver o histórico dos seus hábitos aqui!</p>
                 </Historico>
-            <Footer /> 
+            <Footer percentual={((habitosConcluidos.length / habito.length) * 100).toFixed()}/>
         </>
     )
 }

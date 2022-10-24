@@ -23,8 +23,8 @@ export default function MainPage() {
             email: e.target.email.value,
             password: e.target.password.value
         }).then((res) => {   
-            navigate("/hoje")
             setLogado(res.data)
+            navigate("/hoje")
         }).catch((e) => {
             alert(e.response.data.message);
             setDisable(false)

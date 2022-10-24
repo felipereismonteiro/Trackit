@@ -14,11 +14,13 @@ import HistoryPage from "./historyPage/HistoryPage";
 function App() {
   const [logado, setLogado] = useState()
   const [porcentagem, setPorcentagem] = useState(60)
+  const [habito, setHabito] = useState([])
+  const [habitosConcluidos, setHabitosConcluidos] = useState([])
 
   return (
         <BrowserRouter>     
         <GlobalStyle />      
-          <Contexto.Provider value={{logado, setLogado, porcentagem, setPorcentagem}}>
+          <Contexto.Provider value={{logado, setLogado, porcentagem, setPorcentagem, habito, setHabito, habitosConcluidos, setHabitosConcluidos}}>
             <Routes>        
                 <Route path="/" element={<MainPage />} />
                 <Route path="/cadastro" element={<SigninPage />} />
