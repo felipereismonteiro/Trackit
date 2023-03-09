@@ -9,13 +9,14 @@ import Desc from "./descHabito"
 import Habito from "./habito"
 
 export default function TodayPage() {
-    const {logado, habito, setHabito, habitosConcluidos, setHabitosConcluidos} = useContext(Contexto)
-    const [carregar, setCarregar] = useState(false)
+    const {habito, setHabito, habitosConcluidos, setHabitosConcluidos} = useContext(Contexto)
+    const [carregar, setCarregar] = useState(false);
+    const userToken = localStorage.getItem("token");
 
     useEffect(() => {
         axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", {
             headers: {
-                "Authorization": `Bearer ${logado.token}`
+                "Authorization": `Bearer ${userToken}`
             }
         }).then((res) => {
             setHabito(res.data)

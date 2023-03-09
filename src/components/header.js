@@ -1,14 +1,12 @@
-import { useContext } from "react";
 import styled from "styled-components"
-import { Contexto } from "./logadoContext.js";
 
 export default function Header() {
-    const {logado} = useContext(Contexto)
+    const userPhoto = localStorage.getItem("photo");
 
     return(       
         <Container>
             <Logo>TrackIt</Logo>
-            <Img src={logado !== undefined ? logado.image : ""} alt="profilePicture" />
+            <Img src={userPhoto} alt="profilePicture" />
         </Container>    
     ) 
 }

@@ -5,12 +5,11 @@ import Header from "../components/header"
 import { Contexto } from "../components/logadoContext"
 
 export default function HistoryPage() {
-    const {habitosConcluidos, habito} = useContext(Contexto)
+    const {habitosConcluidos, habito} = useContext(Contexto);
 
     return(
         <>
             <Header />
-
                 <Historico>
                     <h1>Histórico</h1>
                     <p>Em breve você poderá ver o histórico dos seus hábitos aqui!</p>

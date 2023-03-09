@@ -9,7 +9,8 @@ import Habitos from "./habitos";
 import NenhumHabito from "./nenhumHabito";
 
 export default function HabitsPage() {
-    const {logado, habito, habitosConcluidos} = useContext(Contexto)
+    const {habito, habitosConcluidos} = useContext(Contexto)
+    const userToken = localStorage.getItem("token");
     const [habitos, setHabitos] = useState([])
     const [adicionarHabito, setAdicionarHabito] = useState(false)
     const [buscarHabitos, setBuscarHabitos] = useState(false)
@@ -21,7 +22,7 @@ export default function HabitsPage() {
     useEffect(() => {
         axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",{
             headers: {
-                "Authorization": `Bearer ${logado.token}`
+                "Authorization": `Bearer ${userToken}`
             }
         }).then((res) => {
             setHabitos(res.data)
